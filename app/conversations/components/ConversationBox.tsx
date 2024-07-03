@@ -8,7 +8,7 @@ import clsx from "clsx";
 
 import { Conversation, Message, User } from "@prisma/client";
 import { FullConversationType } from "@/app/types";
-import { useOtherUsers } from "@/app/hooks/useOtherUser";
+import { useOtherUser } from "@/app/hooks/useOtherUser";
 import { Avatar } from "@/app/components/Avatar";
 
 interface ConversationBoxProps {
@@ -20,7 +20,7 @@ export const ConversationBox: FC<ConversationBoxProps> = ({
   data,
   selected,
 }) => {
-  const otherUser = useOtherUsers(data);
+  const otherUser = useOtherUser(data);
   const session = useSession();
   const router = useRouter();
 
@@ -77,7 +77,7 @@ export const ConversationBox: FC<ConversationBoxProps> = ({
         <div className="focus:outline-none">
           <div className="flex justify-between items-center mb-1">
             <p className="text-md font-medium text-gray-900">
-              {data.name || otherUser.name}
+              {data.name || otherUser?.name}
             </p>
             {lastMessage?.createdAt && (
               <p className="text-xs text-gray-400 font-light">

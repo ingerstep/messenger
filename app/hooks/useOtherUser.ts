@@ -5,7 +5,7 @@ import { FullConversationType } from '../types'
 
 import { User } from "@prisma/client";
 
-export const useOtherUsers = (conversation: FullConversationType | {
+export const useOtherUser = (conversation: FullConversationType | {
     users: User[]
 }) => {
     const session = useSession()
