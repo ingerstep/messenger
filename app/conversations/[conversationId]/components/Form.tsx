@@ -34,8 +34,6 @@ export const Form = () => {
   };
 
   const handleUpload = useCallback(async (result: any) => {
-    console.log("Upload result:", result);
-    
     try {
       if (result?.info?.secure_url) {
         await axios.post("/api/messages", {
