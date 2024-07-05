@@ -14,6 +14,7 @@ import {
 } from "@headlessui/react";
 import { Avatar } from "@/app/components/Avatar";
 import { AvatarGroup } from "@/app/components/AvatarGroup";
+import { useActiveList } from "@/app/hooks/useActiveList";
 
 import { ConfirmModal } from "./ConfirmModal";
 
@@ -31,8 +32,10 @@ export const ProfileDrawer: FC<ProfileDrawerProps> = ({
   onClose,
 }) => {
   const otherUser = useOtherUser(data);
-
   const [confirmOpen, setConfirmOpen] = useState(false);
+
+  const { members } = useActiveList();
+  const isActive = members.indexOf(otherUser?.email!) !== -1;
 
   const joinDate = useMemo(() => {
     return format(new Date(otherUser.createdAt), "PP");
@@ -47,8 +50,8 @@ export const ProfileDrawer: FC<ProfileDrawerProps> = ({
       return `${data.users.length} members`;
     }
 
-    return "Active";
-  }, [data]);
+    return isActive ? "Active" : "Offline";
+  }, [data, isActive]);
 
   return (
     <>
@@ -131,7 +134,9 @@ export const ProfileDrawer: FC<ProfileDrawerProps> = ({
                                     Emails
                                   </dt>
                                   <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
-                                    {data.users.map((user)=>user.email).join(', ')}
+                                    {data.users
+                                      .map((user) => user.email)
+                                      .join(", ")}
                                   </dd>
                                 </div>
                               )}
